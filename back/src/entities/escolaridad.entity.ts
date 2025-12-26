@@ -5,10 +5,9 @@ import { PlanEstudio } from './plan_estudios.entity';
 import { Nota } from './notas.entity';
 import { Definitiva } from './definitivas.entity';
 
-@Entity('escolaridad')
 export class Escolaridad {
-  @PrimaryGeneratedColumn({ name: 'id_escolaridad' })
-  idEscolaridad: number;
+  @PrimaryGeneratedColumn('uuid')
+  idEscolaridad: string;
 
     @Column({ name: 'grado_actual' })
     gradoActual: string;
@@ -38,10 +37,10 @@ export class Escolaridad {
     id_cedula_estudiante: string;
 
     @Column()
-    id_anio_escolar: number;
+    id_anio_escolar: string;
 
     @Column()
-    id_plan_estudio: number;
+    id_plan_estudio: string;
 
   @ManyToOne(() => Estudiante)
   @JoinColumn({ name: 'id_cedula_estudiante' })
@@ -55,9 +54,9 @@ export class Escolaridad {
   @JoinColumn({ name: 'id_plan_estudio' })
   planEstudio: PlanEstudio;
 
-  @OneToMany(() => Nota, n => n.escolaridad)
+  @OneToMany('Nota', 'escolaridad')
   notas: Nota[];
 
-  @OneToMany(() => Definitiva, d => d.escolaridad)
+  @OneToMany('Definitiva', 'escolaridad')
   definitivas: Definitiva[];
 }

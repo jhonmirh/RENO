@@ -5,8 +5,9 @@ import { MateriaDocente } from './materias_docentes.entity';
 
 @Entity('materias')
 export class Materia {
-  @PrimaryGeneratedColumn({ name: 'id_materia' })
-  idMateria: number;
+
+  @PrimaryGeneratedColumn('uuid')
+  idMateria: string;
 
   @Column()
   nombre: string;

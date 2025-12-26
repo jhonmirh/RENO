@@ -3,8 +3,9 @@ import { AnoEscolar } from './anio_escolar.entity';
 
 @Entity('momentos_pedagogicos')
 export class MomentoPedagogico {
-  @PrimaryGeneratedColumn({ name: 'id_momento' })
-  idMomento: number;
+  
+  @PrimaryGeneratedColumn('uuid')
+  idMomento: string;
 
   @Column({ name: 'nombre_momento' })
   nombreMomento: string;

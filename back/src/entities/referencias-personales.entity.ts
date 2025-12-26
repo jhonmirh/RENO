@@ -1,6 +1,4 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
-
-
 @Entity('referencia_personal')
 export class ReferenciaPersonal {
   @PrimaryColumn({ name: 'id_cedula_referencia' })

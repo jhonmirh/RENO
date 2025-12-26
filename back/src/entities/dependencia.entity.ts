@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 export class Dependencia {
 
     @PrimaryColumn({ name: 'codigo_dependencia' })
-    codigoDependencia: string;
+    codigoDependencia: number;
 
     @PrimaryColumn({ name: 'nombre_dependencia' })
     nombreDependencia: string;

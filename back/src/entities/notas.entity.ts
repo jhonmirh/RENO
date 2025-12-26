@@ -1,24 +1,21 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Materia } from './materias.entity';
-import { Escolaridad } from './escolaridad.entity';
-import { MomentoPedagogico } from './momentos_pedagogicos.entity';
 
 @Entity('notas')
 export class Nota {
-  @PrimaryGeneratedColumn({ name: 'id_notas' })
-  idNotas: number;
+  @PrimaryGeneratedColumn('uuid')
+  idNotas: string;
 
-  @ManyToOne(() => Materia)
+  @ManyToOne('Materia')
   @JoinColumn({ name: 'id_materia' })
-  materia: Materia;
+  materia: any;
 
-  @ManyToOne(() => Escolaridad)
+  @ManyToOne('Escolaridad')
   @JoinColumn({ name: 'id_escolaridad' })
-  escolaridad: Escolaridad;
+  escolaridad: any;
 
-  @ManyToOne(() => MomentoPedagogico)
+  @ManyToOne('MomentoPedagogico')
   @JoinColumn({ name: 'id_momento' })
-  momento: MomentoPedagogico;
+  momento: any;
 
   @Column({ name: 'numero_forma' })
   numeroForma: number;

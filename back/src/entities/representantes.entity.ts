@@ -1,9 +1,9 @@
 import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Estudiante } from './estudiantes.entity';
 import { ReferenciaPersonal } from './referencias-personales.entity';
-
 @Entity('representantes')
 export class Representante {
+
   @PrimaryColumn({ name: 'id_cedula_representante' })
   idCedulaRepresentante: string;
 

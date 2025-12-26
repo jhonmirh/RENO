@@ -3,8 +3,9 @@ import { Definitiva } from './definitivas.entity';
 
 @Entity('revisiones')
 export class Revision {
-  @PrimaryGeneratedColumn({ name: 'id_revision_definitiva' })
-  idRevisionDefinitiva: number;
+  
+  @PrimaryGeneratedColumn('uuid')
+  idRevisionDefinitiva: string;
 
   @Column({ name: 'numero_intento' })
   numeroIntento: number;

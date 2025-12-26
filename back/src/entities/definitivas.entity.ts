@@ -4,8 +4,8 @@ import { Materia } from './materias.entity';
 
 @Entity('definitiva')
 export class Definitiva {
-  @PrimaryGeneratedColumn({ name: 'id_definitiva' })
-  idDefinitiva: number;
+  @PrimaryGeneratedColumn('uuid')
+  idDefinitiva: string;
 
   @ManyToOne(() => Escolaridad)
   @JoinColumn({ name: 'id_escolaridad' })

@@ -3,8 +3,8 @@ import { Dependencia } from './dependencia.entity';
 import { MateriaDocente } from './materias_docentes.entity';
 @Entity('docentes')
 export class Docente {
-  @PrimaryColumn({ name: 'id_cedula_docente' })
-  idCedulaDocente: string;
+    @PrimaryColumn({ name: 'id_cedula_docente' })
+    idCedulaDocente: string;
 
     @Column()
     estado_civil: string;
@@ -61,7 +61,7 @@ export class Docente {
     talla_camisa: string;
 
     @Column()
-    talla_pantalon: string; 
+    talla_pantalon: string;
 
     @Column()
     talla_zapato: string;
@@ -131,7 +131,7 @@ export class Docente {
 
     @Column()
     titulo_obtenido_postgrado_phd: string;
- 
+
     @Column()
     codigoDependencia: string;
 
@@ -171,10 +171,10 @@ export class Docente {
     @Column()
     tipo_ctaNomina: string;
 
-@OneToMany(() => Dependencia, dependencia => dependencia.codigoDependencia)
-dependencias: Dependencia[];
+    @OneToMany(() => Dependencia, dependencia => dependencia.codigoDependencia)
+    dependencias: Dependencia[];
 
-@OneToMany(() => MateriaDocente, md => md.docente)
-materiasDocentes: MateriaDocente[];
+    @OneToMany(() => MateriaDocente, md => md.docente)
+    materiasDocentes: MateriaDocente[];
 
 }

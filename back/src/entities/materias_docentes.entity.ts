@@ -6,7 +6,7 @@ import { Docente } from './docentes.entity';
 export class MateriaDocente {
   
   @PrimaryColumn({ name: 'id_materia' })
-  idMateria: number;
+  idMateria: string;
 
   @PrimaryColumn({ name: 'id_cedula_docente' })
   idCedulaDocente: string;
