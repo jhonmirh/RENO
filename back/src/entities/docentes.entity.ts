@@ -1,9 +1,16 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm';
-
+import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import { Dependencia } from './dependencia.entity';
+import { MateriaDocente } from './materias_docentes.entity';
 @Entity('docentes')
 export class Docente {
   @PrimaryColumn({ name: 'id_cedula_docente' })
   idCedulaDocente: string;
+
+    @Column()
+    estado_civil: string;
+
+    @Column()
+    nacionalidad: string;
 
     @Column()
     nombres: string;
@@ -75,6 +82,27 @@ export class Docente {
     des_discapacidad: string;
 
     @Column()
+    tiene_vivienda_propia: boolean;
+
+    @Column()
+    tipo_vivienda: string;
+
+    @Column()
+    necesidad_vivienda_mejoras: string;
+
+    @Column()
+    tiene_carro: boolean;
+
+    @Column()
+    tiene_moto: boolean;
+
+    @Column()
+    placa_vehiculo: string;
+
+    @Column()
+    placa_moto: string;
+
+    @Column()
     estatura: string;
 
     @Column()
@@ -92,7 +120,6 @@ export class Docente {
     @Column()
     titulo_obtenido_postgrado_especializacion2: string;
 
-
     @Column()
     titulo_obtenido_postgrado_maestria: string;
 
@@ -106,7 +133,7 @@ export class Docente {
     titulo_obtenido_postgrado_phd: string;
  
     @Column()
-    codigo_dependencia: string;
+    codigoDependencia: string;
 
     @Column()
     codigo_cargo: string;
@@ -126,5 +153,28 @@ export class Docente {
     @Column()
     codicion_trabajo: string;
 
+    @Column()
+    fecha_egreso: Date;
+
+    @Column()
+    motivo_egreso: string;
+
+    @Column()
+    foto_docente: string;
+
+    @Column()
+    banco_ctaNomina: string;
+
+    @Column()
+    numero_ctaNomina: string;
+
+    @Column()
+    tipo_ctaNomina: string;
+
+@OneToMany(() => Dependencia, dependencia => dependencia.codigoDependencia)
+dependencias: Dependencia[];
+
+@OneToMany(() => MateriaDocente, md => md.docente)
+materiasDocentes: MateriaDocente[];
 
 }

@@ -10,6 +10,9 @@ export class Estudiante {
     @Column()
     nacionalidad: string;
 
+     @Column()
+    estado_civil: string;
+
     @Column()
     nombre: string;
 
