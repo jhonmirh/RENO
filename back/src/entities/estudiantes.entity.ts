@@ -1,17 +1,58 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Representante } from './representantes.entity';
 import { Escolaridad } from './escolaridad.entity';
+import { Sexo } from '../enums/sexo.enum';
+import { Nacionalidad } from '../enums/nacionalidad.enum';
+import { EstadoCivil } from '../enums/estado_civil.enum';
+import { GrupoSanguineo } from '../enums/GrupoSanguineo.enum';
+// Embeddeds para datos familiares
+class DatosFamiliar {
+  cedula: string;
+  nacionalidad: Nacionalidad;
+  nombre: string;
+  apellido: string;
+  direccion: string;
+  telefono: string;
+}
+
+// Embeddeds para tallas
+class Tallas {
+  camisa: string;
+  pantalon: string;
+  zapato: string;
+}
+
+// Embeddeds para salud
+class Salud {
+  grupo_sanguineo: GrupoSanguineo;
+  alergias: boolean;
+  descripcion_alergia?: string;
+  discapacidad: boolean;
+  descripcion_discapacidad?: string;
+  estatura: string;
+  peso: string;
+}
 
 @Entity('estudiantes')
 export class Estudiante {
   @PrimaryColumn({ name: 'id_cedula_estudiante' })
   idCedulaEstudiante: string;
 
-  @Column()
-  nacionalidad: string;
+  @Column({ type: 'enum', enum: EstadoCivil })
+  estado_civil: EstadoCivil;
 
-  @Column()
-  estado_civil: string;
+  @Column({ type: 'enum', enum: Sexo })
+  sexo: Sexo;
+
+  @Column({ type: 'enum', enum: Nacionalidad })
+  nacionalidad: string;
 
   @Column()
   nombre: string;
@@ -41,9 +82,6 @@ export class Estudiante {
   edad: number;
 
   @Column()
-  sexo: string;
-
-  @Column()
   direccion: string;
 
   @Column()
@@ -52,71 +90,24 @@ export class Estudiante {
   @Column()
   email: string;
 
-  @Column()
-  ced_madre: string;
+  // Datos de padres como embeddeds
+  @Column({ type: 'json' })
+  madre: DatosFamiliar;
 
-  @Column()
-  nombre_madre: string;
+  @Column({ type: 'json' })
+  padre: DatosFamiliar;
 
-  @Column()
-  apellido_madre: string;
+  // Tallas y salud
+  @Column({ type: 'json' })
+  tallas: Tallas;
 
-  @Column()
-  direccion_madre: string;
-
-  @Column()
-  telefono_madre: string;
-
-  @Column()
-  ced_padre: string;
-
-  @Column()
-  nombre_padre: string;
-
-  @Column()
-  apellido_padre: string;
-
-  @Column()
-  direccion_padre: string;
-
-  @Column()
-  telefono_padre: string;
-
-  @Column()
-  talla_camisa: string;
-
-  @Column()
-  talla_pantalon: string;
-
-  @Column()
-  talla_zapato: string;
-
-  @Column()
-  grupo_sanguineo: string;
-
-  @Column()
-  alergias: boolean;
-
-  @Column()
-  des_alergia: string;
-
-  @Column()
-  discapacidad: boolean;
-
-  @Column()
-  des_discapacidad: string;
-
-  @Column()
-  estatura: string;
-
-  @Column()
-  peso: string;
+  @Column({ type: 'json' })
+  salud: Salud;
 
   @Column({ name: 'id_cedula_representante' })
   idCedulaRepresentante: string;
 
-
-  @ManyToOne(() => Representante, r => r.estudiantes)
+  @ManyToOne(() => Representante, r => r.estudiantes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'id_cedula_representante' })
   representante: Representante;
 

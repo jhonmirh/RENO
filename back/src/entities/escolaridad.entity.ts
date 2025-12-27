@@ -61,12 +61,6 @@ export class Escolaridad {
   @JoinColumn({ name: 'id_plan_estudio' })
   planEstudio: PlanEstudio;
 
-  @OneToMany(() => Nota, nota => nota.escolaridad)
-  notas: Nota[];
-
-  @OneToMany(() => Definitiva, def => def.escolaridad)
-  definitivas: Definitiva[];
-
   @OneToMany(() => EscolaridadMateria, em => em.escolaridad)
   escolaridadMaterias: EscolaridadMateria[];
 }

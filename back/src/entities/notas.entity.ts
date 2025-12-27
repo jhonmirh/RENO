@@ -1,25 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { EscolaridadMateria } from './materias_escolaridad.entity';
+import { MomentoPedagogico } from './momentos_pedagogicos.entity';
 
 @Entity('notas')
 export class Nota {
+
   @PrimaryGeneratedColumn('uuid')
-  idNotas: string;
+  idNota: string;
 
-  @ManyToOne('Materia')
-  @JoinColumn({ name: 'id_materia' })
-  materia: any;
+  @ManyToOne(
+    () => EscolaridadMateria,
+    em => em.notas,
+    { onDelete: 'CASCADE' },
+  )
+  @JoinColumn({ name: 'id_escolaridad_materia' })
+  escolaridadMateria: EscolaridadMateria;
 
-  @ManyToOne('Escolaridad')
-  @JoinColumn({ name: 'id_escolaridad' })
-  escolaridad: any;
-
-  @ManyToOne('MomentoPedagogico')
+  @ManyToOne(() => MomentoPedagogico)
   @JoinColumn({ name: 'id_momento' })
-  momento: any;
+  momento: MomentoPedagogico;
 
-  @Column({ name: 'numero_forma' })
+  @Column({ name: 'numero_forma', type: 'int' })
   numeroForma: number;
 
-  @Column()
+  @Column({ type: 'numeric' })
   nota: number;
 }

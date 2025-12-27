@@ -13,11 +13,7 @@ export class CreateDefinitivaDto {
 
   @IsNotEmpty()
   @IsUUID()
-  idEscolaridad: string;
-
-  @IsNotEmpty()
-  @IsUUID()
-  idMateria: string;
+  idEscolaridadMateria: string;
 
   @IsNotEmpty()
   @IsNumber()

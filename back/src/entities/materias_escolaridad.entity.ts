@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Unique, OneToMany } from 'typeorm';
 import { Escolaridad } from './escolaridad.entity';
 import { MateriaPlanEstudio } from './materias_plan_estudio.entity';
+import { Nota } from './notas.entity';
+import { Definitiva } from './definitivas.entity';
 
 @Entity('escolaridad_materias')
 @Unique(['escolaridad', 'materiaPlanEstudio'])
@@ -22,4 +24,10 @@ export class EscolaridadMateria {
 
   @Column({ default: false })
   esRepetida: boolean;
+
+  @OneToMany(() => Nota, nota => nota.escolaridadMateria)
+  notas: Nota[];
+
+  @OneToMany(() => Definitiva, def => def.escolaridadMateria)
+  definitivas: Definitiva[];
 }

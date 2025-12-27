@@ -6,25 +6,24 @@ import {
   JoinColumn,
   Unique,
 } from 'typeorm';
-import { Escolaridad } from './escolaridad.entity';
-import { Materia } from './materias.entity';
+import { EscolaridadMateria } from './materias_escolaridad.entity';
 import { TipoEvaluacion } from '../enums/tipo-evaluacion.enum';
 import { EstadoAcademico } from '../enums/estado-academico.enum';
 
 @Entity('definitiva')
-@Unique(['escolaridad', 'materia'])
+@Unique(['escolaridadMateria'])
 export class Definitiva {
 
   @PrimaryGeneratedColumn('uuid')
   idDefinitiva: string;
 
-  @ManyToOne(() => Escolaridad)
-  @JoinColumn({ name: 'id_escolaridad' })
-  escolaridad: Escolaridad;
-
-  @ManyToOne(() => Materia)
-  @JoinColumn({ name: 'id_materia' })
-  materia: Materia;
+  @ManyToOne(
+    () => EscolaridadMateria,
+    em => em.definitivas,
+    { onDelete: 'CASCADE' },
+  )
+  @JoinColumn({ name: 'id_escolaridad_materia' })
+  escolaridadMateria: EscolaridadMateria;
 
   @Column({ name: 'nota_final', type: 'numeric' })
   notaFinal: number;
