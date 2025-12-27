@@ -1,0 +1,8 @@
+export enum CondicionEscolaridad {
+  REGULAR = 'REGULAR',
+  REPITIENTE = 'REPITIENTE',
+  MATERIA = 'MATERIA',
+  PENDIENTE = 'PENDIENTE',
+  RETIRADO = 'RETIRADO',
+  INACTIVO = 'INACTIVO',
+}

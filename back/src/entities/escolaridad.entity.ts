@@ -1,46 +1,53 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Estudiante } from './estudiantes.entity';
 import { AnoEscolar } from './anio_escolar.entity';
 import { PlanEstudio } from './plan_estudios.entity';
 import { Nota } from './notas.entity';
 import { Definitiva } from './definitivas.entity';
+import { EscolaridadMateria } from './materias_escolaridad.entity';
+import { CondicionEscolaridad } from '../enums/condicion-escolaridad.enum';
 
+@Entity('escolaridad')
 export class Escolaridad {
+
   @PrimaryGeneratedColumn('uuid')
   idEscolaridad: string;
 
-    @Column({ name: 'grado_actual' })
-    gradoActual: string;
+  @Column({ name: 'grado_actual' })
+  gradoActual: string;
 
-    @Column({ name: 'seccion_actual' })
-    seccionActual: string;
+  @Column({ name: 'seccion_actual' })
+  seccionActual: string;
 
-    @Column()
-    mención: string;
+  @Column({ name: 'mencion', nullable: true })
+  mencion?: string;
 
-    @Column()
-    fecha_ingreso: Date;
+  @Column({ name: 'fecha_ingreso', type: 'date' })
+  fechaIngreso: Date;
 
-    @Column()
-    plantel_origen: string;
+  @Column({ name: 'plantel_origen', nullable: true })
+  plantelOrigen?: string;
 
-    @Column()
-    estado_plantel_origen: string;
+  @Column({ name: 'estado_plantel_origen', nullable: true })
+  estadoPlantelOrigen?: string;
 
-    @Column()
-    municipio_plantel_origen: string;
+  @Column({ name: 'municipio_plantel_origen', nullable: true })
+  municipioPlantelOrigen?: string;
 
-    @Column()
-    condicion: string;
+  @Column({
+    type: 'enum',
+    enum: CondicionEscolaridad,
+  })
+  condicion: CondicionEscolaridad;
 
-    @Column()
-    id_cedula_estudiante: string;
-
-    @Column()
-    id_anio_escolar: string;
-
-    @Column()
-    id_plan_estudio: string;
+  /* 🔗 Relaciones */
 
   @ManyToOne(() => Estudiante)
   @JoinColumn({ name: 'id_cedula_estudiante' })
@@ -54,9 +61,12 @@ export class Escolaridad {
   @JoinColumn({ name: 'id_plan_estudio' })
   planEstudio: PlanEstudio;
 
-  @OneToMany('Nota', 'escolaridad')
+  @OneToMany(() => Nota, nota => nota.escolaridad)
   notas: Nota[];
 
-  @OneToMany('Definitiva', 'escolaridad')
+  @OneToMany(() => Definitiva, def => def.escolaridad)
   definitivas: Definitiva[];
+
+  @OneToMany(() => EscolaridadMateria, em => em.escolaridad)
+  escolaridadMaterias: EscolaridadMateria[];
 }

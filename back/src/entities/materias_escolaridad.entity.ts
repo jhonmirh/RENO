@@ -1,20 +1,25 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Materia } from './materias.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Unique } from 'typeorm';
 import { Escolaridad } from './escolaridad.entity';
+import { MateriaPlanEstudio } from './materias_plan_estudio.entity';
 
-@Entity('materias_escolaridad')
-export class MateriaEscolaridad {
-  @PrimaryColumn({ name: 'id_materia' })
-  idMateria: string;
+@Entity('escolaridad_materias')
+@Unique(['escolaridad', 'materiaPlanEstudio'])
+export class EscolaridadMateria {
 
-  @PrimaryColumn({ name: 'id_escolaridad' })
-  idEscolaridad: string;
+  @PrimaryGeneratedColumn('uuid')
+  idEscolaridadMateria: string;
 
-  @ManyToOne('Materia')
-  @JoinColumn({ name: 'id_materia' })
-  materia: any;
-
-  @ManyToOne('Escolaridad')
+  @ManyToOne(() => Escolaridad)
   @JoinColumn({ name: 'id_escolaridad' })
-  escolaridad: any;
+  escolaridad: Escolaridad;
+
+  @ManyToOne(() => MateriaPlanEstudio)
+  @JoinColumn({ name: 'id_materia_plan' })
+  materiaPlanEstudio: MateriaPlanEstudio;
+
+  @Column({ default: false })
+  esPendiente: boolean;
+
+  @Column({ default: false })
+  esRepetida: boolean;
 }

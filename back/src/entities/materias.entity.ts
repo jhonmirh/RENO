@@ -2,22 +2,21 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColum
 import { PlanEstudio } from './plan_estudios.entity';
 import { Nota } from './notas.entity';
 import { MateriaDocente } from './materias_docentes.entity';
+import { MateriaPlanEstudio } from './materias_plan_estudio.entity';
 
 @Entity('materias')
 export class Materia {
-
   @PrimaryGeneratedColumn('uuid')
   idMateria: string;
 
-  @Column()
-  nombre: string;
+  @Column({ unique: true })
+  nombre: string; // Matemática, Castellano, Biología
 
-  @ManyToOne(() => PlanEstudio)
-  @JoinColumn({ name: 'id_plan_estudio' })
-  planEstudio: PlanEstudio;
+  @Column({ nullable: true })
+  descripcion?: string;
 
-  @OneToMany(() => Nota, n => n.materia)
-  notas: Nota[];
+  @OneToMany(() => MateriaPlanEstudio, mpe => mpe.materia)
+  materiaPlanEstudios: MateriaPlanEstudio[];
 
   @OneToMany(() => MateriaDocente, md => md.materia)
   materiasDocentes: MateriaDocente[];

@@ -1,0 +1,5 @@
+export enum TipoEvaluacion {
+  FINAL = 'FINAL',
+  REVISION = 'REVISION',
+  MATERIA_PENDIENTE = 'MATERIA_PENDIENTE',
+}
