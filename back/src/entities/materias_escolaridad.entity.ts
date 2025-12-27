@@ -16,7 +16,7 @@ export class EscolaridadMateria {
   escolaridad: Escolaridad;
 
   @ManyToOne(() => MateriaPlanEstudio)
-  @JoinColumn({ name: 'id_materia_plan' })
+  @JoinColumn({ name: 'id_materia_plan_estudio' })
   materiaPlanEstudio: MateriaPlanEstudio;
 
   @Column({ default: false })

@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column, Unique, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Unique, OneToMany } from 'typeorm';
 import { PlanEstudio } from './plan_estudios.entity';
 import { Materia } from './materias.entity';
 import { EscolaridadMateria } from './materias_escolaridad.entity';
@@ -8,10 +8,13 @@ import { EscolaridadMateria } from './materias_escolaridad.entity';
 @Unique(['planEstudio', 'grado', 'materia'])
 export class MateriaPlanEstudio {
 
-  @PrimaryColumn({ name: 'id_plan_estudio' })
+  @PrimaryGeneratedColumn('uuid')
+  idMateriaPlanEstudio: string;
+
+  @Column({ name: 'id_plan_estudio' })
   idPlanEstudio: string;
 
-  @PrimaryColumn({ name: 'id_materia' })
+  @Column({ name: 'id_materia' })
   idMateria: string;
 
   @ManyToOne(() => PlanEstudio, pe => pe.materiaPlanEstudios)
