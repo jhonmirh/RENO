@@ -8,42 +8,32 @@ import {
 } from 'typeorm';
 import { Representante } from './representantes.entity';
 import { Escolaridad } from './escolaridad.entity';
+import { Institucion } from './instituciones.entity';
 import { Sexo } from '../enums/sexo.enum';
 import { Nacionalidad } from '../enums/nacionalidad.enum';
 import { EstadoCivil } from '../enums/estado_civil.enum';
 import { GrupoSanguineo } from '../enums/GrupoSanguineo.enum';
-// Embeddeds para datos familiares
-class DatosFamiliar {
-  cedula: string;
-  nacionalidad: Nacionalidad;
-  nombre: string;
-  apellido: string;
-  direccion: string;
-  telefono: string;
-}
-
-// Embeddeds para tallas
-class Tallas {
-  camisa: string;
-  pantalon: string;
-  zapato: string;
-}
-
-// Embeddeds para salud
-class Salud {
-  grupo_sanguineo: GrupoSanguineo;
-  alergias: boolean;
-  descripcion_alergia?: string;
-  discapacidad: boolean;
-  descripcion_discapacidad?: string;
-  estatura: string;
-  peso: string;
-}
 
 @Entity('estudiantes')
 export class Estudiante {
+
   @PrimaryColumn({ name: 'id_cedula_estudiante' })
   idCedulaEstudiante: string;
+
+  /* =======================
+     RELACIÓN INSTITUCIÓN
+     ======================= */
+
+  @Column({ name: 'id_institucion' })
+  idInstitucion: string;
+
+  @ManyToOne(() => Institucion)
+  @JoinColumn({ name: 'id_institucion' })
+  institucion: Institucion;
+
+  /* =======================
+     DATOS PERSONALES
+     ======================= */
 
   @Column({ type: 'enum', enum: EstadoCivil })
   estado_civil: EstadoCivil;
@@ -52,7 +42,7 @@ export class Estudiante {
   sexo: Sexo;
 
   @Column({ type: 'enum', enum: Nacionalidad })
-  nacionalidad: string;
+  nacionalidad: Nacionalidad;
 
   @Column()
   nombre: string;
@@ -90,19 +80,9 @@ export class Estudiante {
   @Column()
   email: string;
 
-  // Datos de padres como embeddeds
-  @Column({ type: 'json' })
-  madre: DatosFamiliar;
-
-  @Column({ type: 'json' })
-  padre: DatosFamiliar;
-
-  // Tallas y salud
-  @Column({ type: 'json' })
-  tallas: Tallas;
-
-  @Column({ type: 'json' })
-  salud: Salud;
+  /* =======================
+     REPRESENTANTE
+     ======================= */
 
   @Column({ name: 'id_cedula_representante' })
   idCedulaRepresentante: string;
@@ -110,6 +90,10 @@ export class Estudiante {
   @ManyToOne(() => Representante, r => r.estudiantes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'id_cedula_representante' })
   representante: Representante;
+
+  /* =======================
+     ESCOLARIDAD
+     ======================= */
 
   @OneToMany(() => Escolaridad, e => e.estudiante)
   escolaridades: Escolaridad[];
