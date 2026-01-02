@@ -1,28 +1,12 @@
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Matches,
-  IsUUID,
-  MaxLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, IsOptional, IsInt } from 'class-validator';
 
 export class CreateAnoEscolarDto {
 
-  @IsNotEmpty()
-  @IsString()
-  @Matches(/^\d{4}-\d{4}$/, {
-    message: 'El año escolar debe tener el formato YYYY-YYYY (ej: 2025-2026)',
-  })
-  @MaxLength(9)
-  nombreAno: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(255)
-  observaciones?: string;
-
-  @IsNotEmpty()
-  @IsUUID()
-  idPlanEstudio: string;
+  @IsNotEmpty() @IsString() nombreAno: string; 
+  @IsOptional() @IsString() observaciones?: string;
+  
+  @IsNotEmpty() @IsUUID() idInstitucion: string; // Nueva relación con Institución
+  @IsNotEmpty() @IsUUID() codigoDependencia: string; // Nueva relación con Dependencia
+  
+  @IsNotEmpty() @IsUUID() idPlanEstudio: string;
 }
