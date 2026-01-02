@@ -1,56 +1,39 @@
 import {
-  IsNotEmpty,
-  IsString,
   IsUUID,
   IsEnum,
-  IsDateString,
+  IsNumber,
   IsOptional,
+  IsBoolean,
 } from 'class-validator';
-import { CondicionEscolaridad } from '../../enums/condicion-escolaridad.enum';
+import { EstadoAcademico } from '../../enums/estado-academico.enum';
 
 export class CreateEscolaridadDto {
 
-  @IsNotEmpty()
-  @IsString()
-  gradoActual: string;
-
-  @IsNotEmpty()
-  @IsString()
-  seccionActual: string;
+  @IsOptional()
+  @IsEnum(EstadoAcademico)
+  estadoAcademico?: EstadoAcademico;
 
   @IsOptional()
-  @IsString()
-  mencion?: string;
-
-  @IsNotEmpty()
-  @IsDateString()
-  fechaIngreso: Date;
+  @IsNumber()
+  materiasPendientes?: number;
 
   @IsOptional()
-  @IsString()
-  plantelOrigen?: string;
+  @IsNumber()
+  grado?: number;
 
   @IsOptional()
-  @IsString()
-  estadoPlantelOrigen?: string;
-
-  @IsOptional()
-  @IsString()
-  municipioPlantelOrigen?: string;
-
-  @IsNotEmpty()
-  @IsEnum(CondicionEscolaridad)
-  condicion: CondicionEscolaridad;
-
-  @IsNotEmpty()
   @IsUUID()
-  idEstudiante: string;
+  idPlanEstudio?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsUUID()
-  idAnoEscolar: string;
+  idInstitucion?: string;
 
-  @IsNotEmpty()
-  @IsUUID()
-  idPlanEstudio: string;
+  @IsOptional()
+  @IsNumber()
+  codigoDependencia?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  activo?: boolean;
 }

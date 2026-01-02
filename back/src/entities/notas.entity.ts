@@ -5,38 +5,33 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { Evaluacion } from './evaluaciones.entity';
 import { EscolaridadMateria } from './materias_escolaridad.entity';
-import { MomentoPedagogico } from './momentos_pedagogicos.entity';
-import { Usuario } from './usuarios.entity';
+import { Docente } from './docentes.entity';
 @Entity('notas')
 export class Nota {
 
   @PrimaryGeneratedColumn('uuid')
   idNota: string;
 
-  @ManyToOne(
-    () => EscolaridadMateria,
-    em => em.notas,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne(() => Evaluacion)
+  @JoinColumn({ name: 'id_evaluacion' })
+  evaluacion: Evaluacion;
+
+  @ManyToOne(() => EscolaridadMateria)
   @JoinColumn({ name: 'id_escolaridad_materia' })
   escolaridadMateria: EscolaridadMateria;
 
-  @ManyToOne(() => MomentoPedagogico)
-  @JoinColumn({ name: 'id_momento' })
-  momento: MomentoPedagogico;
+  @ManyToOne(() => Docente)
+  @JoinColumn({ name: 'id_docente' })
+  docente: Docente;
 
-  @Column({ name: 'numero_forma', type: 'int' })
-  numeroForma: number;
+  @Column()
+  numeroForma: number; // 1 o 2
 
   @Column({ type: 'numeric' })
   nota: number;
 
-  @ManyToOne(() => Usuario)
-  @JoinColumn({ name: 'id_usuario_registro' })
-  usuarioRegistro: Usuario;
-
-  @Column({ name: 'fecha_registro', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp' })
   fechaRegistro: Date;
-
 }

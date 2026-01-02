@@ -47,6 +47,13 @@ export class Escolaridad {
   })
   condicion: CondicionEscolaridad;
 
+  @Column()
+  estadoAcademico: string; // Regular, Repitente, Materia Pendiente, Retirado, Inactivo
+
+  @Column({ nullable: true })
+  materiasPendientes: number; // Cantidad de materias pendientes
+
+
   /* 🔗 Relaciones */
 
   @ManyToOne(() => Estudiante)
