@@ -28,39 +28,49 @@ export class NotasService {
   ) {}
 
   async cargarNota(dto: CreateNotaDto, user: any) {
-    // 1️⃣ Verificar que la materia pertenece al docente (simplificado)
-    // Aquí deberías implementar la lógica para verificar permisos basada en idEscolaridadMateria
-    // Por ahora, asumimos que el usuario tiene permiso
+    // 1. Verificar que el docente tiene acceso a la materia del estudiante
+    const materiaDocente = await this.materiaDocenteRepo.findOne({
+      where: {
+        docente: { idCedulaDocente: user.id }, // Aquí usamos la relación docente.idCedulaDocente
+        materia: { idMateria: dto.idEvaluacion },  // Relación con la materia de la evaluación
+      },
+    });
 
-    // 2️⃣ Encontrar evaluacion
+    if (!materiaDocente) {
+      throw new ForbiddenException('No tiene permiso para registrar notas en esta materia');
+    }
+
+    // 2. Buscar la evaluación correspondiente
     const evaluacion = await this.evaluacionRepo.findOne({
       where: { idEvaluacion: dto.idEvaluacion },
     });
 
     if (!evaluacion) {
-      throw new ForbiddenException('Evaluación no encontrada');
+      throw new ForbiddenException('Evaluación no válida');
     }
 
-    // 3️⃣ Encontrar escolaridadMateria
+    // 3. Buscar la materia del estudiante (escolaridadMateria)
     const escolaridadMateria = await this.escolaridadMateriaRepo.findOne({
       where: { idEscolaridadMateria: dto.idEscolaridadMateria },
       relations: ['escolaridad'],
     });
 
     if (!escolaridadMateria) {
-      throw new ForbiddenException('EscolaridadMateria no encontrada');
+      throw new ForbiddenException('Materia del estudiante no válida');
     }
 
+    // 4. Obtener la escolaridad del estudiante
     const escolaridad = escolaridadMateria.escolaridad;
 
-    // 4️⃣ Crear nota
+    // 5. Crear la entidad Nota
     const nota = new Nota();
     nota.escolaridadMateria = escolaridadMateria;
-    nota.docente = user; // Asumiendo que user es Docente
+    nota.docente = user;  // Asumimos que `user` contiene el docente autenticado
     nota.numeroForma = dto.numeroForma;
     nota.nota = dto.nota;
     nota.fechaRegistro = new Date();
 
+    // 6. Guardar la nota en la base de datos
     return this.notaRepo.save(nota);
   }
 }

@@ -2,21 +2,21 @@ import { IsUUID, IsNumber, Min, Max } from 'class-validator';
 
 export class CreateNotaDto {
   @IsUUID()
-  idEvaluacion: string; // Evaluación a la que corresponde
+  idEvaluacion: string;  // Evaluación que corresponde
 
   @IsUUID()
-  idEscolaridadMateria: string; // La materia inscrita por el estudiante
+  idEscolaridadMateria: string;  // Materia que corresponde al estudiante
 
   @IsUUID()
-  idDocente: string; // Para guardar quién registró la nota
+  idDocente: string;  // Docente que registra la nota
 
   @IsNumber()
   @Min(1)
   @Max(2)
-  numeroForma: number; // 1 o 2
+  numeroForma: number;  // 1 o 2 para las formas de evaluación (1ra forma, 2da forma)
 
   @IsNumber()
   @Min(0)
-  @Max(20) // o 10 según el sistema educativo venezolano
-  nota: number; // Nota registrada
+  @Max(20)  // Cambia el límite si tu sistema tiene una escala diferente
+  nota: number;  // Nota final de la evaluación
 }

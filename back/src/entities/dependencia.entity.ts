@@ -10,12 +10,11 @@ import { Institucion } from './instituciones.entity';
 @Entity('dependencias')
 export class Dependencia {
 
-  @PrimaryColumn({ name: 'codigo_dependencia' })
-  codigoDependencia: number;
+  @PrimaryColumn({ name: 'codigo_dependencia', type: 'int' })
+  codigoDependencia: number;  // Aquí aseguramos que sea integer
 
-  @PrimaryColumn({ name: 'nombre_dependencia' })
-  nombreDependencia: string;
-
+  @Column({ name: 'nombre_dependencia', type: 'varchar' })
+  nombreDependencia: string;  // Aquí aseguramos que sea string
   @Column()
   direccion: string;
 

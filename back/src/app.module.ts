@@ -4,13 +4,16 @@ import { connectionSource } from './config/data-source';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DefinitivasModule } from './modules/definitivas/definitivas.module';
-
+import {NotasModule} from "./modules/notas/notas.module";
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async () => connectionSource.options,
     }),
     DefinitivasModule,
+    NotasModule,
+    UsuariosModule,
     // otros módulos que importen entidades
   ],
   controllers: [AppController],
