@@ -32,6 +32,12 @@ export class Nota {
   @Column({ type: 'numeric' })
   nota: number;
 
+  @Column({ nullable: true, type: 'numeric' })
+  notaConsejo: number;  // Nota de la segunda forma, opcional
+
   @Column({ type: 'timestamp' })
   fechaRegistro: Date;
+
+  @Column()
+  observaciones: string;
 }
