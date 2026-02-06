@@ -4,11 +4,11 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from '../auth/jwt.strategy';
-import { UsuariosModule } from '../modules/usuarios/usuarios.module';
+
 
 @Module({
   imports: [
-    UsuariosModule,
+    
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
